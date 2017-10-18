@@ -35,6 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
 
         Habit habit = items.get(position);
+        holder.habitSrNo.setText(habit.getId());
         holder.habitName.setText(habit.getName());
         holder.habitDate.setText(habit.getDate());
         holder.habitFrequency.setText(habit.getFrequency());

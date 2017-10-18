@@ -1,21 +1,14 @@
 package iamutkarshtiwari.github.io.habtrac.activity.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +36,6 @@ public class AddHabitFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         final View addView = inflater.inflate(R.layout.dialog_add, null);
-
 
 
         final Dialog addDialog = builder.setView(addView)
@@ -88,16 +80,15 @@ public class AddHabitFragment extends DialogFragment {
                         String frequency = editNumberOfTimes.getText().toString().trim();
 
                         // validate all the required infomation
-                        if (TextUtils.isEmpty(name)  || TextUtils.isEmpty(date) || TextUtils.isEmpty(frequency)) {
+                        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(date) || TextUtils.isEmpty(frequency)) {
                             Toast.makeText(getActivity(), getString(R.string.habit_info_not_complete), Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             insertHabit(name, date, frequency);
                             wantToCloseDialog = true;
                         }
 
                         // after successfully inserting product, dismiss the dialog
-                        if(wantToCloseDialog)
+                        if (wantToCloseDialog)
                             addDialog.dismiss();
                     }
                 });
@@ -105,6 +96,15 @@ public class AddHabitFragment extends DialogFragment {
         });
 
         return addDialog;
+    }
+
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        super.onDismiss(dialog);
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
     }
 
     private void insertHabit(String name, String date, String frequency) {

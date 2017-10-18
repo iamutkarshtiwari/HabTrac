@@ -24,18 +24,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?actionBarSize"
-        android:background="@color/listBGColor">
+        android:background="@color/listBGColor"
+        android:paddingTop="?actionBarSize">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-
     </RelativeLayout>
-
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

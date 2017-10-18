@@ -1,17 +1,11 @@
 package iamutkarshtiwari.github.io.habtrac.activity.activity;
 
-import android.app.LoaderManager;
-import android.content.ContentUris;
-import android.content.CursorLoader;
-import android.content.Intent;
-import android.content.Loader;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.support.constraint.solver.ArrayLinkedVariables;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,9 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,7 +24,7 @@ import iamutkarshtiwari.github.io.habtrac.activity.models.Habit;
 import iamutkarshtiwari.github.io.habtrac.activity.models.HabitContract;
 import iamutkarshtiwari.github.io.habtrac.activity.utils.HabitDbHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
     private RecyclerView recyclerView;
     private RecyclerViewAdapter listAdapter;
@@ -54,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mDbHelper = new HabitDbHelper(this);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         listAdapter = new RecyclerViewAdapter(this, getListFromDatabase());
         layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -63,13 +57,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(listAdapter);
 
-        mDbHelper = new HabitDbHelper(this);
+    }
 
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        updateListView();
     }
 
     private void showAddProductDialog() {
         AddHabitFragment newFragment = new AddHabitFragment();
         newFragment.show(getSupportFragmentManager(), getString(R.string.add_product));
+    }
+
+
+    public void updateListView() {
+        listAdapter.updateAdapterData(getListFromDatabase());
     }
 
     @Override

@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         mDbHelper = new HabitDbHelper(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        listAdapter = new RecyclerViewAdapter(this, getListFromDatabase());
+        View listArea = findViewById(R.id.list_view);
+        listAdapter = new RecyclerViewAdapter(this, getListFromDatabase(), listArea);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);

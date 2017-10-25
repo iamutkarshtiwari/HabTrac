@@ -19,10 +19,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     private ArrayList<Habit> items;
     private Activity activity;
+    private View parentView;
 
-    public RecyclerViewAdapter(Activity activity, ArrayList<Habit> habitList) {
+    public RecyclerViewAdapter(Activity activity, ArrayList<Habit> habitList, View parentView) {
         this.activity = activity;
         this.items = habitList;
+        this.parentView = parentView;
     }
 
     @Override
@@ -59,6 +61,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     public void updateAdapterData(ArrayList<Habit> newData) {
         this.items = newData;
         notifyDataSetChanged();
+
+        View emptyView = parentView.findViewById(R.id.empty_view);
+        if (this.items.size() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
     /**

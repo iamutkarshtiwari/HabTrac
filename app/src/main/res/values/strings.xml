@@ -13,4 +13,5 @@
     <string name="add_product">Add Product</string>
     <string name="frequency">Frequency</string>
     <string name="cancel">Cancel</string>
+    <string name="empty_view_subtitle_text">Your habit tracker is empty</string>
 </resources>
